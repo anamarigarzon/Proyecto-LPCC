@@ -21,9 +21,8 @@ for j in prisioneros:
                 form_regla1 += str(i)
                 form_regla1 += "O"
             
-    regla1= regla1 + ")"
+    form_regla1= form_regla1 + ")"
         
-regla1 = ""
         
 #Tomar todas las letras proposicionales que tengan color rojo, y unirlas todas con un O 
 #Luego, lo anterior implica (-->)
