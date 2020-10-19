@@ -85,7 +85,7 @@ def dibujar_tablero(f, n):
     for t in tangulos:
         axes.add_patch(t)
 
-    # Cargando imagen de caballo
+    # Cargando imagen de prisionero
     arr_img = plt.imread("prisionero.png", format='png')
     imagebox = OffsetImage(arr_img, zoom=0.1)
     imagebox.image.axes = axes
