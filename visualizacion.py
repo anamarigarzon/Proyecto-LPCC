@@ -1,9 +1,10 @@
 #-*-coding: utf-8-*-
-# Edgar Andrade, Septiembre 2018
+#Ana María Garzón y Gabriela Linares
+#A partir de codificación de tablero de ajedrez 3x3 de Edgar Andrade 
 
-# Visualizacion de tableros de ajedrez 3x3 a partir de
+# Visualizacion de tableros a partir de
 # una lista de literales. Cada literal representa una casilla;
-# el literal es positivo sii hay un caballo en la casilla.
+# el literal es positivo sii hay un prisionero en la casilla.
 
 # Formato de la entrada: - las letras proposionales seran: 1, ..., 9;
 #                        - solo se aceptan literales (ej. 1, ~2, 3, ~4, etc.)
@@ -85,23 +86,23 @@ def dibujar_tablero(f, n):
     for t in tangulos:
         axes.add_patch(t)
 
-    # Cargando imagen de prisionero
+    # Cargando imagen del prisionero
     arr_img = plt.imread("prisionero.png", format='png')
     imagebox = OffsetImage(arr_img, zoom=0.1)
     imagebox.image.axes = axes
 
     # Creando las direcciones en la imagen de acuerdo a literal
     direcciones = {}
-    direcciones[0] = [0.1, 0.75]
-    direcciones[1] = [0.3, 0.75]
-    direcciones[2] = [0.5, 0.75]
-    direcciones[3] = [0.7, 0.75]
-    direcciones[4] = [0.9, 0.75]
-    direcciones[5] = [0.1, 0.2]
-    direcciones[6] = [0.3, 0.2]
-    direcciones[7] = [0.5, 0.2]
-    direcciones[8] = [0.7, 0.2]
-    direcciones[9] = [0.9, 0.2]
+    direcciones[1] = [0.1, 0.75]
+    direcciones[3] = [0.3, 0.75]
+    direcciones[5] = [0.5, 0.75]
+    direcciones[7] = [0.7, 0.75]
+    direcciones[9] = [0.9, 0.75]
+    direcciones[0] = [0.1, 0.2]
+    direcciones[2] = [0.3, 0.2]
+    direcciones[4] = [0.5, 0.2]
+    direcciones[6] = [0.7, 0.2]
+    direcciones[8] = [0.9, 0.2]
 
     for l in f:
         if f[l][1] != 0:
@@ -110,16 +111,16 @@ def dibujar_tablero(f, n):
             
     # Creando las direcciones en la imagen del número del prisionero de acuerdo a literal
     direcciones2 = {}
-    direcciones2[0] = [0.09, 0.9]
-    direcciones2[1] = [0.29, 0.9]
-    direcciones2[2] = [0.49, 0.9]
-    direcciones2[3] = [0.69, 0.9]
-    direcciones2[4] = [0.89, 0.9]
-    direcciones2[5] = [0.09, 0.37]
-    direcciones2[6] = [0.29, 0.37]
-    direcciones2[7] = [0.49, 0.37]
-    direcciones2[8] = [0.69, 0.37]
-    direcciones2[9] = [0.89, 0.37]
+    direcciones2[1] = [0.09, 0.9]
+    direcciones2[3] = [0.29, 0.9]
+    direcciones2[5] = [0.49, 0.9]
+    direcciones2[7] = [0.69, 0.9]
+    direcciones2[9] = [0.89, 0.9]
+    direcciones2[0] = [0.09, 0.37]
+    direcciones2[2] = [0.29, 0.37]
+    direcciones2[4] = [0.49, 0.37]
+    direcciones2[6] = [0.69, 0.37]
+    direcciones2[8] = [0.89, 0.37]
     
     for l in f:
         if f[l][1] != 0:
@@ -130,6 +131,6 @@ def dibujar_tablero(f, n):
    
 #La fórmula es un diccionario que tiene como key la casilla, y como value una lista que tiene en la posición 0 el numero del 1 al 5
 #que identifica al prisionero, y en la posición 1, un 1 si en esa casilla está ese prisionero, y un 0 si la casilla está vacía.
-f={0:[1,0], 1:[2,1], 2:[3,0], 3:[4,1], 4:[5,0], 5:[1,1], 6:[2,0], 7:[3,1], 8:[4,0], 9:[5,1]}
+f={0:[1,1], 1:[2,0], 2:[3,0], 3:[4,1], 4:[5,1], 5:[1,0], 6:[2,0], 7:[3,1], 8:[2,1], 9:[5,0]}
 
 dibujar_tablero(f,121)
