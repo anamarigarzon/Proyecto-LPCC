@@ -47,10 +47,56 @@ def Inorderp(f):
     else:
         return "(" + Inorderp(f.left) + f.label + Inorderp(f.right) + ")"
 
+#-------------------------------------------------------------
 #Regla 1:
 
+#-------------------------------------------------------------
 #Regla 2:
     
+prisioneros=[0,1,2,3,4]
+casillas = []
+Nfilas = 5
+Ncolumnas = 2
+Nnumeros = 5
+R2 = ""
+Regla2 = ""
+
+
+for i in range(Nfilas):
+    for j in range(Ncolumnas):
+        v1 = codificacion_letras.codifica(i, j, Nfilas, Ncolumnas)
+        casillas.append(v1)
+        
+ini = True
+for i in prisioneros:
+    R2 += "Y"
+    Regla2 += ">"
+    for j in casillas:
+        f, c = codificacion_letras.decodifica(j, Nfilas, Ncolumnas)
+        aux = [x for x in casillas if x != j]
+        Regla2 += codificacion_letras.P(f, c, i, Nfilas, Ncolumnas, Nnumeros)
+        if ini == True:
+            Regla2 += "-OOOOOOOOO"
+        ini == False
+        for h in aux:
+            f, c = codificacion_letras.decodifica(h, Nfilas, Ncolumnas)
+            Regla2 += codificacion_letras.P(f, c, i, Nfilas, Ncolumnas, Nnumeros)
+
+R2 += Regla2 #R2 es la cadena en notación polaca
+Regla2 = R2[::-1] #Regla2 es la cadena en notación polaca inversa
+
+#-------------------------------------------------------------
 #Regla 3:
-    
+prisioneros=[0,1,2,3,4]
+casillas = []
+Nfilas = 5
+Ncolumnas = 2
+Nnumeros = 5
+
+#-------------------------------------------------------------                       
 #Regla 4:
+prisioneros=[0,1,2,3,4]
+casillas = []
+Nfilas = 5
+Ncolumnas = 2
+Nnumeros = 5
