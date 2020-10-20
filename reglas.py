@@ -89,7 +89,41 @@ def Inorder2Tree(A):
 #Regla 1:
 print("FÓRMULA REGLA 1")
 print("")
-#Código aquí
+prisioneros=[0,1,2,3,4]
+casillas = []
+Nfilas = 5
+Ncolumnas = 2
+Nnumeros = 5
+R1 = ""
+Regla1 = ""
+
+for i in range(1):
+    for j in range(0, Ncolumnas):
+        v1 = codificacion_letras.codifica(i, j, Nfilas, Ncolumnas)
+        casillas.append(v1)
+ 
+print("\n")       
+print(casillas)
+
+ini = True
+for i in prisioneros:
+    R1 += "Y"
+    Regla1 += ">"
+    for j in casillas:
+        f, c = codificacion_letras.decodifica(j, Nfilas, Ncolumnas)
+        aux = [x for x in casillas if x != j]
+        Regla1 += codificacion_letras.P(f, c, i, Nfilas, Ncolumnas, Nnumeros)
+        if ini == True:
+            Regla1 += "-OOO"
+        ini == False
+        for h in aux:
+            f, c = codificacion_letras.decodifica(h, Nfilas, Ncolumnas)
+            Regla1 += codificacion_letras.P(f, c, i, Nfilas, Ncolumnas, Nnumeros)
+            
+R1 += Regla1 #R2 es la cadena en notación polaca
+Regla1 = R1[::-1] #Regla2 es la cadena en notación polaca inversa
+
+print("\n" + Regla1)
 print("")
 
 #-------------------------------------------------------------
