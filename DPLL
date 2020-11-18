@@ -1,0 +1,60 @@
+def unit_propagate(I,S):
+      
+    y = True
+    nS = {}
+    
+    while (y == True):
+        
+        for clause in S:
+            if len(clause) == 0:
+                y = False
+                break
+            
+            elif (len(clause) == 2 and clause[0] == '-'):
+                
+                y = True
+                
+                i = 0                
+                for c in S:
+                    if clause in c:
+                        del(S[i])
+                
+                i = 0
+                for c in S:
+                    if clause[1] in c:
+                        del(clause[1])
+                
+                I[clause] = 0
+            
+            elif (len(clause) == 1):
+                
+                y = True
+                
+                complemento = '-' + clause
+                
+                   
+                for c in S:
+                    if complemento in c:
+                        
+                
+                              
+                for c in S:
+                    if clause in c:
+                        
+                
+                I[clause] = 1
+            
+            else:
+                y = False
+    
+    return I , S
+
+lista = {"p","-pq","-qrs","u-sr","rt","ps-t","-ru"}
+dic = {}
+
+x, y = unit_propagate(dic, lista)
+
+print (x)
+print (y)
+                    
+                 
