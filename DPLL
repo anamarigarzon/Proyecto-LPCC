@@ -1,3 +1,11 @@
+
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Nov 18 09:31:35 2020
+
+@author: Gabriela Linares y Ana Garzón
+"""
+
 def unidad(S):
   for x in S:
     if len(x) == 1:
@@ -11,15 +19,15 @@ def complemento(un):
   else:
     return '-' + un
 
-def unit_propagate(I,S):
+def unit_propagate(S,I):
 
   y = True
 
   while y:
 
-    if [] in S:
-      y = False
-      return "Insatisfacible"
+    for i in S:
+      if len(i) == 0:
+          return "Insatisfacible", {}
 
     un = unidad(S)
 
@@ -28,6 +36,7 @@ def unit_propagate(I,S):
       #SE BORRAN LAS CLAUSULAS COMPLETAS QUE TIENEN A L
       if len(un) == 1:
         I[un] = 1
+        
       else:
         I[complemento(un)] = 0
       S = [x for x in S if un not in x]
@@ -38,6 +47,7 @@ def unit_propagate(I,S):
 
     else:
       y = False
+      
   return I , S
 
 lista = [["p"],["-p","q"],["-q","r","s"],["u","-s","r"],["r","t"],["p","s","-t"],["-r","u"]]
@@ -45,8 +55,8 @@ dic = {}
 
 x, y = unit_propagate(dic, lista)
 
-print (x)
-print (y)
+#print (x)
+#print (y)
 
 def literal_no_asignado(atomos, diccionario):
   for x in atomos:
@@ -56,11 +66,12 @@ def literal_no_asignado(atomos, diccionario):
 
 def DPLL(S,I):
   Sp, Ip = unit_propagate(S,I)
-
-  if [] in Sp:
-    return "Insatisfacible", {}
   
-  elif len(Sp) == 0:
+  for i in Sp:
+      if len(i) == 0:
+          return "Insatisfacible", {}
+  
+  if len(Sp) == 0:
     return "Satisfacible", Ip
 
   p = literal_no_asignado(Sp, Ip)
@@ -112,3 +123,5 @@ x, y = DPLL(lista, dic)
 
 print(x)
 print(y)
+                    
+               
