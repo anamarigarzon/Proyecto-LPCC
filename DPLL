@@ -47,3 +47,68 @@ x, y = unit_propagate(dic, lista)
 
 print (x)
 print (y)
+
+def literal_no_asignado(atomos, diccionario):
+  for x in atomos:
+    for y in x:
+      if not y in diccionario:
+        return y
+
+def DPLL(S,I):
+  Sp, Ip = unit_propagate(S,I)
+
+  if [] in Sp:
+    return "Insatisfacible", {}
+  
+  elif len(Sp) == 0:
+    return "Satisfacible", Ip
+
+  p = literal_no_asignado(Sp, Ip)
+
+  #SE BORRAN LAS CLAUSULAS COMPLETAS QUE TIENEN A L
+  Spp = [x for x in Sp if p not in x]
+  #SE BORRA Lc DE LAS DEMÁS CLAUSULAS
+  for clause in Spp:
+    if complemento(p) in clause:
+      clause.remove(complemento(p))
+
+  Ipp = Ip
+
+  if len(p) == 1:
+        Ipp[p] = 1
+  else:
+        Ipp[complemento(p)] = 0
+
+  o, l = DPLL(Spp, Ipp)
+
+  if o == "Satisfacible" and l == Ipp:
+    return "Satisfacible", Ipp
+  
+  else:
+    Sppp = Sp
+
+    #SE BORRA Lc DE TODAS LAS CLAUSULAS
+    Sppp = [x for x in Sp if complemento(p) not in x]
+
+    #SE BORRA L DE LAS CLAUSULAS QUE TIENEN A L
+    for clause in Sppp:
+      if p in clause:
+        clause.remove(p)
+
+    Ippp = Ip
+
+    if len(p) == 1:
+          Ippp[p] = 0
+    else:
+          Ippp[complemento(p)] = 1
+
+    return  DPLL(Sppp,Ippp)
+
+
+lista = [["p","-q","r"],["-p","q","-r"],["-p","-q","r"],["-p","-q","-r"]]
+dic = {}
+
+x, y = DPLL(lista, dic)
+
+print(x)
+print(y)
