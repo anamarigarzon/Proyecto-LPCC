@@ -1,3 +1,5 @@
+
+#PUNTO 2 Y 3 TALLER DPLL
 def unidad(S):
   for x in S:
     if len(x) == 1:
@@ -10,6 +12,21 @@ def complemento(un):
     return un[1]
   else:
     return '-' + un
+
+# def unit_propagate(s, i):
+#     unidad = hay_unidad(s)
+#     while ([] not in s) and (unidad != None):
+#         complementos = complemento(unidad)
+#         s = [c for c in s if unidad not in c]
+#         for c in s:
+#             if complementos in c:
+#                 c.remove(complementos)
+#         if unidad[0] == '-':
+#             i[complementos] = 0
+#         else:
+#             i[unidad] = 1
+#         unidad = hay_unidad(s)
+#     return s, i
 
 def unit_propagate(S,I):
 
@@ -42,13 +59,6 @@ def unit_propagate(S,I):
       
   return S, I
 
-lista = [["p"],["-p","q"],["-q","r","s"],["u","-s","r"],["r","t"],["p","s","-t"],["-r","u"]]
-dic = {}
-
-x, y = unit_propagate(dic, lista)
-
-#print (x)
-#print (y)
 
 def literal_no_asignado(atomos, diccionario):
   for x in atomos:
@@ -56,60 +66,63 @@ def literal_no_asignado(atomos, diccionario):
       if not y in diccionario:
         return y
 
+
 def DPLL(S,I):
-  Sp, Ip = unit_propagate(S,I)
+  S, I = unit_propagate(S,I)
   
-  if [] in Sp:
+  if [] in S:
     return "Insatisfacible", {}
   
-  if len(Sp) == 0:
-    return "Satisfacible", Ip
+  elif len(S) == 0:
+    return "Satisfacible", I
 
-  p = literal_no_asignado(Sp, Ip)
+  p = literal_no_asignado(S, I)
 
   #SE BORRAN LAS CLAUSULAS COMPLETAS QUE TIENEN A L
-  Spp = [x for x in Sp if p not in x]
+  Sp = [x[:] for x in S if p not in x]
   #SE BORRA Lc DE LAS DEMÁS CLAUSULAS
-  for clause in Spp:
+  for clause in Sp:
     if complemento(p) in clause:
       clause.remove(complemento(p))
 
-  Ipp = Ip
+  Ip = I
 
   if len(p) == 1:
-        Ipp[p] = 1
+        Ip[p] = 1
   else:
-        Ipp[complemento(p)] = 0
+        Ip[complemento(p)] = 0
 
-  o, l = DPLL(Spp, Ipp)
+  o, l = DPLL(Sp, Ip)
 
-  if o == "Satisfacible" and l == Ipp:
-    return "Satisfacible", Ipp
+  if o == "Satisfacible" and l == Ip:
+    return "Satisfacible", Ip
   
   else:
-    Sppp = Sp
+    Spp = S
 
     #SE BORRA Lc DE TODAS LAS CLAUSULAS
-    Sppp = [x for x in Sp if complemento(p) not in x]
+    Spp = [x for x in S if complemento(p) not in x]
 
     #SE BORRA L DE LAS CLAUSULAS QUE TIENEN A L
-    for clause in Sppp:
+    for clause in Spp:
       if p in clause:
         clause.remove(p)
 
-    Ippp = Ip
+    Ipp = I
 
     if len(p) == 1:
-          Ippp[p] = 0
+          Ipp[p] = 0
     else:
-          Ippp[complemento(p)] = 1
+          Ipp[complemento(p)] = 1
 
-    return  DPLL(Sppp,Ippp)
+    return  DPLL(Spp,Ipp)
 
-
-lista1 = [["p", "q"],["r","s"],["-r","-s"]]
-lista2 = [["p","q"],["p","-q"],["-p","q"],["-p","-q"]]
-lista3 = [["p","q"],["-p","q"],["-q","-r"],["r","-q"]]
+#PUNTO 4 TALLER DPLL
+lista1 = [["p", "q","r"],["-p","-q","-r"],["-p","q","r"],["-q","r"],["q","-r"]]
+lista2 = [["p","q","r","-s"],["p","t","s"],["-p","-q"],["p","r","-q","-s"]]
+lista3 = [["p","q","-r"],["r","s","t"],["t"],["p","s"],["q","-p"]]
+lista4 = [["p","-q"],["-p","-q"],["q","r"],["-q","-r"],["-p","-r"],["p","-r"]]
+lista5 = [["r","p","s"],["-r","-p"],["-r","p","s"],["p","-s"]]
 dic = {}
 
 x, y = DPLL(lista1, dic)
@@ -127,6 +140,22 @@ print(y)
 print('')
 dic = {}
 x, y = DPLL(lista3, dic)
+
+print(x)
+print(y)
+
+print('')
+
+dic = {}
+x, y = DPLL(lista4, dic)
+
+print(x)
+print(y)
+
+print('')
+
+dic = {}
+x, y = DPLL(lista5, dic)
 
 print(x)
 print(y)
