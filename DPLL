@@ -101,7 +101,7 @@ def DPLL(S,I):
     Spp = S
 
     #SE BORRA Lc DE TODAS LAS CLAUSULAS
-    Spp = [x for x in S if complemento(p) not in x]
+    Spp = [x[:] for x in S if complemento(p) not in x]
 
     #SE BORRA L DE LAS CLAUSULAS QUE TIENEN A L
     for clause in Spp:
