@@ -13,21 +13,6 @@ def complemento(un):
   else:
     return '-' + un
 
-# def unit_propagate(s, i):
-#     unidad = hay_unidad(s)
-#     while ([] not in s) and (unidad != None):
-#         complementos = complemento(unidad)
-#         s = [c for c in s if unidad not in c]
-#         for c in s:
-#             if complementos in c:
-#                 c.remove(complementos)
-#         if unidad[0] == '-':
-#             i[complementos] = 0
-#         else:
-#             i[unidad] = 1
-#         unidad = hay_unidad(s)
-#     return s, i
-
 def unit_propagate(S,I):
 
   y = True
