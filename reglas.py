@@ -1,72 +1,59 @@
 # -*- coding: utf-8 -*-
 """
 Created on Mon Oct 12 18:01:03 2020
-
 @author: Ana Garzón y Gabriela Linares
-
 Reglas en Lógica Proposicional
-
 Proyecto Lógica para Ciencias de la Computación
 """
 
 #NO SIRVE STRING2TREE
 
 
-import codificacion_letras
+from codificacion_letras import *
 
 conectivos = ['>','O','Y','=']
 
 class Tree(object):
-	def __init__(self, label, left, right):
-		self.left = left
-		self.right = right
-		self.label = label
-
-def Inorder(f):
-    # Imprime una formula como cadena dada una formula como arbol
-    # Input: tree, que es una formula de logica proposicional
-    # Output: string de la formula
-	if f.right == None:
-		return f.label
-	elif f.label == '-':
-		return f.label + Inorder(f.right)
-	else:
-		return "(" + Inorder(f.left) + f.label + Inorder(f.right) + ")"
-
+    def __init__(self, label, left, right):
+        self.left = left
+        self.right = right
+        self.label = label
+        
 def String2Tree(A):
-	# Crea una formula como tree dada una formula como cadena escrita en notacion polaca inversa
-	# Input: - A, lista de caracteres con una formula escrita en notacion polaca inversa
-	#        - letrasProposicionales, lista de letras proposicionales
-	#        - conectivos, lista de conectivos
-	# Output: formula como tree
-	pila = []
-	for c in A:
-		# print("Examinando " + str(c))
-		if c in codificacion_letras.cod:
-			# print(u"El símbolo es letra proposicional")
-			pila.append(Tree(c, None, None))
-		elif c == '-':
-			# print("Negamos")
-			formulaAux = Tree(c, None, pila[-1])
-			del pila[-1]
-			pila.append(formulaAux)
-		elif c in conectivos:
-			# print("Unimos mediante conectivo")
-			formulaAux = Tree(c, pila[-1], pila[-2])
-			del pila[-1]
-			del pila[-1]
-			pila.append(formulaAux)
-		else:
-			print(u"Hay un problema: el símbolo " + str(c) + " no se reconoce")
-	return pila[-1]
+    letrasProposicionales = letras
+    Conectivos = ['O','Y','>','=']
+    Pila = []
+    for c in A:
+        if c in letrasProposicionales:
+            Pila.append(Tree(c,None,None))
+        elif c=='-':
+            FormulaAux = Tree(c,None,Pila[-1])
+            del Pila[-1]
+            Pila.append(FormulaAux)
+        elif c in Conectivos:
+            FormulaAux = Tree(c,Pila[-1],Pila[-2])
+            del Pila[-1]
+            del Pila[-1]
+            Pila.append(FormulaAux)
+        else:
+            print(u"Hay un problema: el símbolo " + str(c)+ " no se reconoce")
+    return Pila[-1]
 
 def Inorderp(f):
     if f.right == None:
-        return str(codificacion_letras.Pinv(f.label, Nfilas, Ncolumnas, Nnumeros))
+        return str(Pinv(f.label, 5, 2, 5))
     elif f.label == '-':
         return f.label + Inorderp(f.right)
     else:
         return "(" + Inorderp(f.left) + f.label + Inorderp(f.right) + ")"
+
+def Inorderpu(f):
+    if f.right == None:
+        return f.label
+    elif f.label == '-':
+        return f.label + Inorderpu(f.right)
+    else:
+        return "(" + Inorderpu(f.left) + f.label + Inorderpu(f.right) + ")"
 
 def Inorder2Tree(A):
 	if len(A) == 1:
@@ -85,46 +72,106 @@ def Inorder2Tree(A):
 	else:
 		return -1
 
+
+'''
 #-------------------------------------------------------------
 #Regla 1:
+print("")
 print("FÓRMULA REGLA 1")
 print("")
 prisioneros=[0,1,2,3,4]
-casillas = []
+#casillas = []
 Nfilas = 5
 Ncolumnas = 2
 Nnumeros = 5
-R1 = ""
-Regla1 = ""
+regla_1_1 = ""
+regla_1_2 = ""
+formula = ""
 
-for i in range(1):
-    for j in range(0, Ncolumnas):
-        v1 = codificacion_letras.codifica(i, j, Nfilas, Ncolumnas)
-        casillas.append(v1)
- 
+for j in range(0, Ncolumnas):
+    v1 = codifica(0, j, Nfilas, Ncolumnas)
+    casillas.append(v1)
+
 print("\n")       
 print(casillas)
+    
 
-ini = True
-for i in prisioneros:
-    R1 += "Y"
-    Regla1 += ">"
-    for j in casillas:
-        f, c = codificacion_letras.decodifica(j, Nfilas, Ncolumnas)
-        aux = [x for x in casillas if x != j]
-        Regla1 += codificacion_letras.P(f, c, i, Nfilas, Ncolumnas, Nnumeros)
-        if ini == True:
-            Regla1 += "-OOO"
-        ini == False
-        for h in aux:
-            f, c = codificacion_letras.decodifica(h, Nfilas, Ncolumnas)
-            Regla1 += codificacion_letras.P(f, c, i, Nfilas, Ncolumnas, Nnumeros)
-            
-R1 += Regla1 #R2 es la cadena en notación polaca
-Regla1 = R1[::-1] #Regla2 es la cadena en notación polaca inversa
+listareglas = []
 
-print("\n" + Regla1)
+for x in prisioneros:
+    #s = [j for j in prisioneros if j != x]
+    inicial = True
+    for i in prisioneros:
+        if inicial:
+            regla_1_1 = P(0, 1, i, Nfilas, Ncolumnas, Nnumeros)
+            inicial = False
+        else:
+            regla_1_1 += P(0, 1, i, Nfilas, Ncolumnas, Nnumeros) + "O"
+        
+    regla_1_1 = regla_1_1 + "-" + P(0, 0, x, Nfilas, Ncolumnas, Nnumeros) + '='
+    listareglas.append(regla_1_1)
+    print(Inorderp(String2Tree(regla_1_1)))
+    print("")
+    regla_1_1 = ""
+
+inicial1 = True        
+for x in listareglas:
+    if inicial1:
+        regla_1_1 = x
+        inicial1 = False
+    else:
+        regla_1_1 += x + "O"
+
+print(regla_1_1)
+
 print("")
+ 
+print(Inorderp(String2Tree(regla_1_1)))
+
+
+print("")
+print("")
+
+listareglas = []
+
+for x in prisioneros:
+    #s = [j for j in prisioneros if j != x]
+    inicial = True
+    for i in prisioneros:
+        if inicial:
+            regla_1_2 = P(0, 0, i, Nfilas, Ncolumnas, Nnumeros)
+            inicial = False
+        else:
+            regla_1_2 += P(0, 0, i, Nfilas, Ncolumnas, Nnumeros) + "O"
+        
+    regla_1_2 = regla_1_2 + "-" + P(0, 1, x, Nfilas, Ncolumnas, Nnumeros) + '='
+    listareglas.append(regla_1_2)
+    print(Inorderp(String2Tree(regla_1_2)))
+    print("")
+    regla_1_2 = ""
+
+inicial1 = True        
+for x in listareglas:
+    if inicial1:
+        regla_1_2 = x
+        inicial1 = False
+    else:
+        regla_1_2 += x + "O"
+
+print(regla_1_2)
+
+print("")
+ 
+print(Inorderp(String2Tree(regla_1_2)))
+
+Regla1 = regla_1_1 + regla_1_2 + 'O'
+
+print(Regla1)
+
+print("")
+ 
+print(Inorderp(String2Tree(Regla1)))
+
 
 #-------------------------------------------------------------
 #Regla 2: Un prisionero no está en más de una casilla
@@ -137,152 +184,151 @@ casillas = []
 Nfilas = 5
 Ncolumnas = 2
 Nnumeros = 5
-R2 = ""
-Regla2 = ""
 
 
 for i in range(Nfilas):
     for j in range(Ncolumnas):
-        v1 = codificacion_letras.codifica(i, j, Nfilas, Ncolumnas)
+        v1 = codifica(i, j, Nfilas, Ncolumnas)
         casillas.append(v1)
-        
-ini = True
-for i in prisioneros:
-    for j in casillas:
-        R2 += "Y"
-        Regla2 += ">"
-        f, c = codificacion_letras.decodifica(j, Nfilas, Ncolumnas)
-        aux = [x for x in casillas if x != j]
-        Regla2 += codificacion_letras.P(f, c, i, Nfilas, Ncolumnas, Nnumeros)
-        if ini == True:
-            Regla2 += "-OOOOOOOO"
-        ini == False
-        for h in aux:
-            f, c = codificacion_letras.decodifica(h, Nfilas, Ncolumnas)
-            Regla2 += codificacion_letras.P(f, c, i, Nfilas, Ncolumnas, Nnumeros)
 
-R2 += Regla2 #R2 es la cadena en notación polaca
-Regla2 = R2[::-1] #Regla2 es la cadena en notación polaca inversa
+print("\n")       
+print(casillas)
+
+def r21(p):
+    listareglas = []
+    for x in casillas:    
+        f,c = decodifica(x,Nfilas,Ncolumnas)
+        s = [j for j in casillas if j != x]
+        inicial1 = True
+        for i in s:
+            f1,c1 = decodifica(i,Nfilas,Ncolumnas)
+            if inicial1:
+                regla_2_1 = P(f1, c1, p, Nfilas, Ncolumnas, Nnumeros)
+                inicial1 = False
+            else:
+                regla_2_1 += P(f1, c1, p, Nfilas, Ncolumnas, Nnumeros) + "O"
+                    
+        regla_2_1 = regla_2_1 + "-" + P(f, c, p, Nfilas, Ncolumnas, Nnumeros) + '='
+        listareglas.append(regla_2_1)
+        print(Inorderp(String2Tree(regla_2_1)))
+        print("")
+        regla_2_1 = ""
+    
+    inicial = True        
+    for x in listareglas:
+        if inicial:
+            regla_2_1 = x
+            inicial = False
+        else:
+            regla_2_1 += x + "O"
+    
+    return regla_2_1
+
+Regla2 = ""
+listareglas = []
+
+for i in prisioneros:
+    listareglas.append(r21(i))
+    
+inicial1 = True        
+for x in listareglas:
+    if inicial1:
+        Regla2 = x
+        inicial1 = False
+    else:
+        Regla2 += x + "O"
+
 print(Regla2)
-#print(Inorderp(String2Tree(Regla2))) #ERROR, INDEX OUT OF RANGE
 
 print("")
+ 
+print(Inorderp(String2Tree(Regla2)))
 
+'''
 #-------------------------------------------------------------
 #Regla 3: Si un prisionero sale un día par, ningún prisionero puede salir un día impar. Así mismo, si un prisionero sale un día impar, ningún prisionero puede salir un día par.
-    
+
+print("")
 print("FÓRMULA REGLA 3")
 print("")
 
 prisioneros=[0,1,2,3,4]
-casillasi = [1,3,5,7,9]
-casillasp = [0,2,4,6,8]
+casillas1 = [0,2,4,6,8]
+casillas2 = [1,3,5,7,9]
 Nfilas = 5
 Ncolumnas = 2
 Nnumeros = 5
-R3 = ""
-Regla3 = ""
 
-ini = True
-for n in prisioneros:
-    for j in range(0,2):
-        R3 += "Y"
-        Regla3 += ">"
-        f, c = codificacion_letras.decodifica(j, Nfilas, Ncolumnas)
-        Regla3 += codificacion_letras.P(f, c, n, Nfilas, Ncolumnas, Nnumeros)
-        Regla3 += "-"
-        for i in range(25):
-            Regla3 += "O"
-        if j == 0:
-            for h in casillasi:
-                a, b = codificacion_letras.decodifica(h, Nfilas, Ncolumnas)
-                for x in prisioneros:
-                    Regla3 += codificacion_letras.P(a, b, x, Nfilas, Ncolumnas, Nnumeros)
-        if j == 1:
-            for h in casillasp:
-                a, b = codificacion_letras.decodifica(h, Nfilas, Ncolumnas)
-                for x in prisioneros:
-                    Regla3 +=codificacion_letras.P(a, b, x, Nfilas, Ncolumnas, Nnumeros)
+
+inicial = True
+
+def r31(p,caslist,inicial1):
+    regla_3_1 = ""
+    for x in caslist:    
+        f1,c1 = decodifica(x,Nfilas,Ncolumnas)
+        if inicial1:
+            regla_3_1 = P(f1, c1, p, Nfilas, Ncolumnas, Nnumeros)
+            inicial1 = False
+        else:
+            regla_3_1 += P(f1, c1, p, Nfilas, Ncolumnas, Nnumeros) + "O"
+                      
+    return regla_3_1
+
+def r32(num_cas):
+    inicial = True
+    regla_3_2 = ""
+    if num_cas % 2 == 0:
+        for p in prisioneros:
+            if inicial:
+                regla_3_2 = r31(p,casillas2,inicial)
+                inicial = False
+            else:
+                regla_3_2 += r31(p,casillas2,inicial)
                 
-R3 += Regla3 #R3 es la cadena en notación polaca
-Regla3 = R3[::-1] #Regla3 es la cadena en notación polaca inversa    
-print(Regla3)
-#print(Inorderp(String2Tree(Regla3))) #ERROR, INDEX OUT OF RANGE
+    else:
+        for p in prisioneros:
+            if inicial:
+                regla_3_2 = r31(p,casillas1,inicial)
+                inicial = False
+            else:
+                regla_3_2 += r31(p,casillas1,inicial)
+    
+    return regla_3_2
+                
+def r33(num_cas):
+    inicial = True
+    regla_3_3 = ""
+    for i in prisioneros:
+        f,c = decodifica(num_cas,Nfilas,Ncolumnas)
+        if inicial:
+            regla_3_3 = r32(num_cas) + '-' + P(f,c,i,Nfilas,Ncolumnas,Nnumeros) + '='
+            inicial = False
+        else:
+            regla_3_3 += r32(num_cas) + '-' + P(f,c,i,Nfilas,Ncolumnas,Nnumeros) + '=' + 'O'
+    
+    return regla_3_3
+    
+def r34():
+    inicial = True
+    regla_3_4 = ""
+    for i in range(0,1):
+        if inicial:
+            regla_3_4 = r33(i)
+            inicial = False
+        else:
+            regla_3_4 += r33(i) + 'O'
+    return regla_3_4
+
+Regla3 = r34()
+        
+print(Inorderp(String2Tree(Regla3)))   
 
 print("")
-    
+
+
+
 #-------------------------------------------------------------                       
 #Regla 4: Los cinco prisioneros deben salir. Eso significa que deben estar llenas o todas las casillas blancas, o todas las casillas grises. 
 print("FÓRMULA REGLA 4")
 print("")
-
-prisioneros=[0,1,2,3,4]
-
-letrasporcelda = ["","","","","","","","","",""]
-casillas = []
-
-lpcp = []
-lpci = []
-
-Nfilas = 5
-Ncolumnas = 2
-Nnumeros = 5
-prisioneros = [0,1,2,3,4]
-R4 = "OY"
-Regla4 = ""
-
-for i in range(Nfilas):
-    for j in range(Ncolumnas):
-        v1 = codificacion_letras.codifica(i, j, Nfilas, Ncolumnas)
-        casillas.append(v1)
-
-for i in casillas:
-     f, c = codificacion_letras.decodifica(i, Nfilas, Ncolumnas)
-     for n in prisioneros:
-         letrasporcelda[i] += (codificacion_letras.P(f, c, n, Nfilas, Ncolumnas, Nnumeros))
-
-for i in range(10):
-    if i%2 == 0:
-        lpcp.append(letrasporcelda[i])
-    else:
-        lpci.append(letrasporcelda[i])
-
-
-Regla4 = "YYYY"
-for i in lpcp:
-    a = "OOOO"
-    a += i
-    Regla4 += a
-
-R4 += Regla4
-
-Regla4 ="-OOOO"
-    
-for i in lpci:
-    a = "OOOO"
-    a += i
-    i = a
-    Regla4 += a
-
-R4 += Regla4
-
-Regla4 = "YYYYY"
-for i in lpci:
-    a = "OOOO"
-    a += i
-    Regla4 += a
-
-R4 += Regla4
-
-Regla4 ="-OOOO"
-for i in lpci:
-    a = "OOOO"
-    a += i
-    i = a
-    Regla4 += a
-
-R4 += Regla4
-Regla4 = R4[::-1]
-print(Regla4)
-#print(Inorderp(String2Tree(Regla4))) # ERROR, INDEX OUT OF RANGE
 
