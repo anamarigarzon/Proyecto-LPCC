@@ -1,25 +1,24 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Sep 29 08:11:58 2020
-
 @author: Ana Garzón y Gabriela Linares
-
 Codificación Letras Proposicionales
-
 Proyecto Lógica para Ciencias de la Computación
 """
+
+print("-------CODIFICACIÓN LETRAS PROPOSICIONALES---------")
 
 def codifica(f, c, Nf, Nc):
     # Funcion que codifica la fila f y columna c
     assert((f >= 0) and (f <= Nf - 1)), 'Primer argumento incorrecto! Debe ser un numero entre 0 y ' + str(Nf) - 1  + "\nSe recibio " + str(f)
     assert((c >= 0) and (c <= Nc - 1)), 'Segundo argumento incorrecto! Debe ser un numero entre 0 y ' + str(Nc - 1)  + "\nSe recibio " + str(c)
     n = Nc * f + c
-    # print(u'Número a codificar:', n)
+    #print(u'Número a codificar:', n)
     return n
 
 def decodifica(n, Nf, Nc):
     # Funcion que codifica un caracter en su respectiva fila f y columna c de la tabla
-    assert((n >= 0) and (n <= Nf * Nc - 1)), 'Codigo incorrecto! Debe estar entre 0 y' + str(Nf * Nc - 1) + "\nSe recibio " + str(n)
+    #assert((n >= 0) and (n <= Nf * Nc - 1)), 'Codigo incorrecto! Debe estar entre 0 y' + str(Nf * Nc - 1) + "\nSe recibio " + str(n)
     f = int(n / Nc)
     c = n % Nc
     return f, c
@@ -76,22 +75,28 @@ def Pinv(codigo, Nf, Nc, No):
 
 print("\n")
 letras = []
+n = 0
 Nnumeros = 5
 for k in range(Nnumeros):
     print("Prisionero: "+str(k))
     print("filas x columnas")
     for i in range(Nfilas):
         for j in range(Ncolumnas):
+            n += 1
             cod = P(i, j, k, Nfilas, Ncolumnas, Nnumeros)
             print(cod, end = " ")
             letras.append(cod)
         print("")
     print('\n')
-#print('\n')
+    
+
+
+print("Total de letras proposicionales: ", n)
 
 for cod in letras:
     print('Letra = '+cod, end=', ')
     f, c, o = Pinv(cod, Nfilas, Ncolumnas, Nnumeros)
     print('Prisionero = '+str(o), end=', ')
     print('Fila = '+str(f), end=', ')
-    print('Columna = '+str(c))
+    print('Columna = '+str(c), end=',')
+    print('Número de letra: ', ord(cod))
