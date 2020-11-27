@@ -21,6 +21,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.offsetbox import AnnotationBbox, OffsetImage
+from codificacion_letras import *
+from DPLL import *
 print("Listo!")
 
 def dibujar_tablero(f, n):
@@ -131,7 +133,21 @@ def dibujar_tablero(f, n):
    
 #La fórmula es un diccionario que tiene como key la casilla, y como value una lista que tiene en la posición 0 el numero del 1 al 5
 #que identifica al prisionero, y en la posición 1, un 1 si en esa casilla está ese prisionero, y un 0 si la casilla está vacía.
-f={0:[1,1], 1:[2,0], 2:[3,0], 3:[4,1], 4:[5,1], 5:[1,0], 6:[2,0], 7:[3,1], 8:[2,1], 9:[5,0]}
+#f={0:[1,1], 1:[2,1], 2:[3,0], 3:[4,1], 4:[5,1], 5:[1,0], 6:[2,0], 7:[3,1], 8:[2,1], 9:[5,0]}
 #Falta transformar la f para que en lugar de un diccionario, reciba una fórmula.
+
+def gen_dic(d):
+    newDic = {}
+    for cod in d:
+        if d[cod] == 1:
+            print('Letra = '+cod, end=', ')
+            f, c, o = Pinv(cod, Nfilas, Ncolumnas, Nnumeros)
+            print('Prisionero = '+str(o), end=', ')
+            print('Fila = '+str(f), end=', ')
+            print('Columna = '+str(c))
+            newDic[codifica(f,c,5,2)] = [o,1]
+    return newDic
+
+f = gen_dic(Diccionario)
 
 dibujar_tablero(f,121)
