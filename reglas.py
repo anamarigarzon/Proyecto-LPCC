@@ -73,14 +73,14 @@ def Inorder2Tree(A):
 		return -1
 
 
-'''
-#-------------------------------------------------------------
-#Regla 1:
+
+#-------------------------------------------------------------.
+#Regla 1: Para el segundo turno, deben estar llenas o la celdas 1 y o la celda 0, pero no ambas
 print("")
 print("FÓRMULA REGLA 1")
 print("")
 prisioneros=[0,1,2,3,4]
-#casillas = []
+casillas = []
 Nfilas = 5
 Ncolumnas = 2
 Nnumeros = 5
@@ -108,10 +108,10 @@ for x in prisioneros:
         else:
             regla_1_1 += P(0, 1, i, Nfilas, Ncolumnas, Nnumeros) + "O"
         
-    regla_1_1 = regla_1_1 + "-" + P(0, 0, x, Nfilas, Ncolumnas, Nnumeros) + '='
+    regla_1_1 = regla_1_1 + "-" + P(0, 0, x, Nfilas, Ncolumnas, Nnumeros) + '>'
     listareglas.append(regla_1_1)
-    print(Inorderp(String2Tree(regla_1_1)))
-    print("")
+    #print(Inorderp(String2Tree(regla_1_1)))
+    #print("")
     regla_1_1 = ""
 
 inicial1 = True        
@@ -122,15 +122,15 @@ for x in listareglas:
     else:
         regla_1_1 += x + "O"
 
-print(regla_1_1)
+#print(regla_1_1)
 
-print("")
+#print("")
  
-print(Inorderp(String2Tree(regla_1_1)))
+#print(Inorderp(String2Tree(regla_1_1)))
 
 
-print("")
-print("")
+#print("")
+#print("")
 
 listareglas = []
 
@@ -144,10 +144,10 @@ for x in prisioneros:
         else:
             regla_1_2 += P(0, 0, i, Nfilas, Ncolumnas, Nnumeros) + "O"
         
-    regla_1_2 = regla_1_2 + "-" + P(0, 1, x, Nfilas, Ncolumnas, Nnumeros) + '='
+    regla_1_2 = regla_1_2 + "-" + P(0, 1, x, Nfilas, Ncolumnas, Nnumeros) + '>'
     listareglas.append(regla_1_2)
-    print(Inorderp(String2Tree(regla_1_2)))
-    print("")
+    #print(Inorderp(String2Tree(regla_1_2)))
+    #print("")
     regla_1_2 = ""
 
 inicial1 = True        
@@ -158,17 +158,17 @@ for x in listareglas:
     else:
         regla_1_2 += x + "O"
 
-print(regla_1_2)
+#print(regla_1_2)
 
-print("")
+#print("")
  
-print(Inorderp(String2Tree(regla_1_2)))
+#print(Inorderp(String2Tree(regla_1_2)))
 
 Regla1 = regla_1_1 + regla_1_2 + 'O'
 
-print(Regla1)
+#print(Regla1)
 
-print("")
+#print("")
  
 print(Inorderp(String2Tree(Regla1)))
 
@@ -196,6 +196,7 @@ print(casillas)
 
 def r21(p):
     listareglas = []
+    
     for x in casillas:    
         f,c = decodifica(x,Nfilas,Ncolumnas)
         s = [j for j in casillas if j != x]
@@ -208,13 +209,13 @@ def r21(p):
             else:
                 regla_2_1 += P(f1, c1, p, Nfilas, Ncolumnas, Nnumeros) + "O"
                     
-        regla_2_1 = regla_2_1 + "-" + P(f, c, p, Nfilas, Ncolumnas, Nnumeros) + '='
+        regla_2_1 = regla_2_1 + "-" + P(f, c, p, Nfilas, Ncolumnas, Nnumeros) + '>'
         listareglas.append(regla_2_1)
         print(Inorderp(String2Tree(regla_2_1)))
         print("")
         regla_2_1 = ""
     
-    inicial = True        
+    inicial = True 
     for x in listareglas:
         if inicial:
             regla_2_1 = x
@@ -236,15 +237,15 @@ for x in listareglas:
         Regla2 = x
         inicial1 = False
     else:
-        Regla2 += x + "O"
+        Regla2 += x + "O" #RECORDAR
 
-print(Regla2)
+#print(Regla2)
 
 print("")
  
 print(Inorderp(String2Tree(Regla2)))
 
-'''
+
 #-------------------------------------------------------------
 #Regla 3: Si un prisionero sale un día par, ningún prisionero puede salir un día impar. Así mismo, si un prisionero sale un día impar, ningún prisionero puede salir un día par.
 
@@ -301,10 +302,10 @@ def r33(num_cas):
     for i in prisioneros:
         f,c = decodifica(num_cas,Nfilas,Ncolumnas)
         if inicial:
-            regla_3_3 = r32(num_cas) + '-' + P(f,c,i,Nfilas,Ncolumnas,Nnumeros) + '='
+            regla_3_3 = r32(num_cas) + '-' + P(f,c,i,Nfilas,Ncolumnas,Nnumeros) + '>'
             inicial = False
         else:
-            regla_3_3 += r32(num_cas) + '-' + P(f,c,i,Nfilas,Ncolumnas,Nnumeros) + '=' + 'O'
+            regla_3_3 += r32(num_cas) + '-' + P(f,c,i,Nfilas,Ncolumnas,Nnumeros) + '>' + 'O'
     
     return regla_3_3
     
@@ -331,4 +332,60 @@ print("")
 #Regla 4: Los cinco prisioneros deben salir. Eso significa que deben estar llenas o todas las casillas blancas, o todas las casillas grises. 
 print("FÓRMULA REGLA 4")
 print("")
+
+prisioneros=[0,1,2,3,4]
+casillasp = [0,2,4,6,8]
+casillasi = [1,3,5,7,9]
+Nfilas = 5
+Ncolumnas = 2
+Nnumeros = 5
+
+def r41(casx):
+
+    regla_4_1 = ""
+    inicial = True
+    f,c = decodifica(casx,Nfilas,Ncolumnas)
+    for i in prisioneros:
+        if inicial:
+            regla_4_1 = P(f,c,i,Nfilas,Ncolumnas,Nnumeros)
+            inicial = False
+        else:
+            regla_4_1 += P(f,c,i,Nfilas,Ncolumnas,Nnumeros) + 'O'
+            
+    return regla_4_1
+
+def r42(casx):
+    regla_4_2 = ""
+    if casx % 2 == 0:
+        inicial1 = True
+        for i in casillasp:
+            if inicial1:
+                regla_4_2 = r41(i)
+                inicial1 = False
+            else:
+                regla_4_2 += r41(i) + 'Y'
+    else:
+        inicial1 = True
+        for i in casillasi:
+            if inicial1:
+                regla_4_2 = r41(i)
+                inicial1 = False
+            else:
+                regla_4_2 += r41(i) + 'Y'
+                
+    return regla_4_2
+
+Regla4 = r42(0) + r42(1) + 'O'
+
+print(Inorderp(String2Tree(Regla4)))  
+
+#-----------------------------------------------------------------
+#------------------REGLA GENERAL-------------------
+
+ReglaGeneral = Regla1 + Regla2 + 'Y' + Regla3 + 'Y' + Regla4 + 'Y'
+
+print("")
+print("-----REGLA GENERAL-----")
+print("")
+print(Inorderp(String2Tree(ReglaGeneral))) 
 
