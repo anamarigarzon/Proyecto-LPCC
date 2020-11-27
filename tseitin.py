@@ -3,6 +3,9 @@
 # Subrutinas para la transformacion de una
 # formula a su forma clausal
 
+from codificacion_letras import *
+from reglas import *
+
 def enFNC(A):
     # Subrutina de Tseitin para encontrar la FNC de
     # la formula en la pila
@@ -15,7 +18,8 @@ def enFNC(A):
     assert(len(A)==4 or len(A)==7), u"Fórmula incorrecta!"
     B = ''
     p = A[0]
-    # print('p', p)
+    #print('p', p)
+    
     if "-" in A:
         q = A[-1]
         # print('q', q)
@@ -39,8 +43,8 @@ def enFNC(A):
         # print('r', r)
         B = q+"O"+p+"Y-"+r+"O"+p+"Y-"+q+"O"+r+"O-"+p
     else:
-        print(u'Error enENC(): Fórmula incorrecta!')
-
+        print(u'Error enFNC(): Fórmula incorrecta!')
+        print(A)
     return B
 
 # Algoritmo de transformacion de Tseitin
@@ -53,7 +57,7 @@ def Tseitin(A, letrasProposicionalesA):
     #letrasProposicionalesB = [chr(x) for x in range(65, 91)]
     #letrasProposicionalesB = [chr(x) for x in range(65, 78)]
     
-    letrasProposicionalesB = [chr(x) for x in range(256, 1200)]
+    letrasProposicionalesB = [chr(x) for x in range(306,1135)]
     assert(not bool(set(letrasProposicionalesA) & set(letrasProposicionalesB))), u"¡Hay letras proposicionales en común!"
     L = [] # Inicializamos lista de conjunciones
     Pila = [] # Inicializamos pila
@@ -138,3 +142,10 @@ def formaClausal(A):
                 i += 1
     
     return L
+
+
+Clausulas = formaClausal(Tseitin(Inorderpu(String2Tree(Regla2)), letras))
+
+print(Clausulas)
+
+      
