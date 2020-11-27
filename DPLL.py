@@ -1,5 +1,8 @@
 
 #PUNTO 2 Y 3 TALLER DPLL
+
+from tseitin import *
+
 def unidad(S):
   for x in S:
     if len(x) == 1:
@@ -103,46 +106,17 @@ def DPLL(S,I):
     return  DPLL(Spp,Ipp)
 
 #PUNTO 4 TALLER DPLL
-lista1 = [["p", "q","r"],["-p","-q","-r"],["-p","q","r"],["-q","r"],["q","-r"]]
-lista2 = [["p","q","r","-s"],["p","t","s"],["-p","-q"],["p","r","-q","-s"]]
-lista3 = [["p","q","-r"],["r","s","t"],["t"],["p","s"],["q","-p"]]
-lista4 = [["p","-q"],["-p","-q"],["q","r"],["-q","-r"],["-p","-r"],["p","-r"]]
-lista5 = [["r","p","s"],["-r","-p"],["-r","p","s"],["p","-s"]]
-dic = {}
 
-x, y = DPLL(lista1, dic)
-
-print(x)
-print(y)
-
-print('')
-dic = {}
-x, y = DPLL(lista2, dic)
-
-print(x)
-print(y)
-
-print('')
-dic = {}
-x, y = DPLL(lista3, dic)
-
-print(x)
-print(y)
-
-print('')
 
 dic = {}
-x, y = DPLL(lista4, dic)
 
-print(x)
-print(y)
+Vverdad, Diccionario1 = DPLL(Clausulas, dic)
 
-print('')
+Diccionario = {}
 
-dic = {}
-x, y = DPLL(lista5, dic)
+for i in Diccionario1:
+    if i in letras:
+        Diccionario[i] = Diccionario1[i]
 
-print(x)
-print(y)
-
-print('')
+print(Vverdad)
+print(Diccionario)
