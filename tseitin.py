@@ -1,9 +1,9 @@
-# -----------------------ALGORITMO DE TSEITIN-------------------------
+
+#----------------------ALGORITMO DE TSEITIN-------------------------
 
 # Subrutinas para la transformacion de una
 # formula a su forma clausal
 
-from codificacion_letras import *
 from reglas import *
 
 def enFNC(A):
@@ -44,7 +44,7 @@ def enFNC(A):
         B = q+"O"+p+"Y-"+r+"O"+p+"Y-"+q+"O"+r+"O-"+p
     else:
         print(u'Error enFNC(): Fórmula incorrecta!')
-        print(A)
+        #print(A)
     return B
 
 # Algoritmo de transformacion de Tseitin
@@ -57,7 +57,7 @@ def Tseitin(A, letrasProposicionalesA):
     #letrasProposicionalesB = [chr(x) for x in range(65, 91)]
     #letrasProposicionalesB = [chr(x) for x in range(65, 78)]
     
-    letrasProposicionalesB = [chr(x) for x in range(306,1135)]
+    letrasProposicionalesB = [chr(x) for x in range(306,1110)]
     assert(not bool(set(letrasProposicionalesA) & set(letrasProposicionalesB))), u"¡Hay letras proposicionales en común!"
     L = [] # Inicializamos lista de conjunciones
     Pila = [] # Inicializamos pila
@@ -144,8 +144,12 @@ def formaClausal(A):
     return L
 
 
-Clausulas = formaClausal(Tseitin(Inorderpu(String2Tree(Regla2)), letras))
+Clausulas = formaClausal(Tseitin(Inorderpu(String2Tree(ReglaGeneral)), letras))
 
+print("")
+print("-------------ALGORITMO DE TSEITIN----------------")
+print("")
+print("Clausulas:")
+print("")
 print(Clausulas)
-
       
