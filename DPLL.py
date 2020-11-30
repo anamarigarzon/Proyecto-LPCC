@@ -1,8 +1,7 @@
-
-#PUNTO 2 Y 3 TALLER DPLL
-
 from tseitin import *
 
+print("")
+print("--------------DPLL----------------")
 def unidad(S):
   for x in S:
     if len(x) == 1:
@@ -118,5 +117,9 @@ for i in Diccionario1:
     if i in letras:
         Diccionario[i] = Diccionario1[i]
 
-print(Vverdad)
+print("")
+print("El problema es: ", Vverdad)
+print("")
+print("Valores de las letras de una posible solución:")
+print("")
 print(Diccionario)
