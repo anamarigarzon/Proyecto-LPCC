@@ -15,15 +15,14 @@
 
 #################
 # importando paquetes para dibujar
-print("Importando paquetes...")
+#print("Importando paquetes...")
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.offsetbox import AnnotationBbox, OffsetImage
-from codificacion_letras import *
 from DPLL import *
-print("Listo!")
+#print("Listo!")
 
 def dibujar_tablero(f, n):
     # Visualiza un tablero dada una formula f
@@ -148,6 +147,14 @@ def gen_dic(d):
             newDic[codifica(f,c,5,2)] = [o,1]
     return newDic
 
-f = gen_dic(Diccionario)
+print("")
+print("-----------VISUALIZACIÓN-----------")
+print("")
+print("Prisioneros y su ubicación en el tablero:")
 
+print("")
+f = gen_dic(Diccionario)
+print("")
 dibujar_tablero(f,121)
+print("¡Su imágen ha sido generada! Para visualizarla, abra en la carpeta en la que tiene estos archivos la imagen tablero_121.png")
+print("")
