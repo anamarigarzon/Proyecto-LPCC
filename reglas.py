@@ -100,6 +100,7 @@ for j in range(0, Ncolumnas):
 
 listareglas = []
 
+#for que hace que si hay un prisionero en la casilla cero, no haya ningún prisionero en la casilla uno
 for x in prisioneros:
     #s = [j for j in prisioneros if j != x]
     inicial = True
@@ -115,14 +116,15 @@ for x in prisioneros:
     #print(Inorderp(String2Tree(regla_1_1)))
     #print("")
     regla_1_1 = ""
-
-inicial1 = True        
+    
+#for que hace la conjunción de todas las reglas del for anterior
+inicial1 = True      
 for x in listareglas:
     if inicial1:
         regla_1_1 = x
         inicial1 = False
     else:
-        regla_1_1 += x + "O"
+        regla_1_1 += x + "Y"
 
 #print(regla_1_1)
 
@@ -136,6 +138,7 @@ for x in listareglas:
 
 listareglas = []
 
+#for que hace que si hay un prisionero en la casilla cero, no haya ningún prisionero en la casilla uno
 for x in prisioneros:
     #s = [j for j in prisioneros if j != x]
     inicial = True
@@ -151,14 +154,15 @@ for x in prisioneros:
     #print(Inorderp(String2Tree(regla_1_2)))
     #print("")
     regla_1_2 = ""
-
+    
+#for que hace la conjunción de todas las reglas del for anterior
 inicial1 = True        
 for x in listareglas:
     if inicial1:
         regla_1_2 = x
         inicial1 = False
     else:
-        regla_1_2 += x + "O"
+        regla_1_2 += x + "Y"
 
 #print(regla_1_2)
 
@@ -166,9 +170,9 @@ for x in listareglas:
  
 #print(Inorderp(String2Tree(regla_1_2)))
 
-Regla1 = regla_1_1 + regla_1_2 + 'O'
+Regla1 = regla_1_1 + regla_1_2 + 'O' #Unir ambos casos con un O
 
-#print(Regla1)
+print(Regla1)
 
 #print("")
  
@@ -196,7 +200,7 @@ for i in range(Nfilas):
 
 formula1 = ""
 
-def r21(cas, p):
+def r21(cas, p): #Ciclo que hace que si un prisionero está en una casilla, no esté en ninguna de las demás casillas
     inicial = True
     for x in range(1,9):
         f,c = decodifica(x,Nfilas,Ncolumnas)
@@ -217,7 +221,7 @@ def r21(cas, p):
     
     return regla_2_1
     
-def r22(p):
+def r22(p): #Ciclo que itera el ciclo anterior por cada una de las casillas
     regla_2_2 = ""
     inicial = True
     for i in casillas:
@@ -229,7 +233,7 @@ def r22(p):
     return regla_2_2
 
 
-
+#Ciclo que itera el ciclo anterior por cada uno de los prisioneros
 inicial = True
 for i in prisioneros:
     if inicial:
@@ -263,7 +267,7 @@ Nnumeros = 5
 
 inicial = True
 
-def r31(p,caslist,inicial1):
+def r31(p,caslist,inicial1): #Se hace el ciclo ingresando un prisionero, y una lista de casillas que indica donde no pueden colocarse los otros prisioneros
     regla_3_1 = ""
     for x in caslist:    
         f1,c1 = decodifica(x,Nfilas,Ncolumnas)
@@ -275,18 +279,18 @@ def r31(p,caslist,inicial1):
                       
     return regla_3_1
 
-def r32(num_cas):
+def r32(num_cas): 
     inicial = True
     regla_3_2 = ""
-    if num_cas % 2 == 0:
+    if num_cas % 2 == 0: #Si el prisionero sale un día par, el ciclo anterior se hace con la lista de impares
         for p in prisioneros:
             if inicial:
                 regla_3_2 = r31(p,casillas2,inicial)
                 inicial = False
-            else:
+            else: 
                 regla_3_2 += r31(p,casillas2,inicial)
                 
-    else:
+    else: #Si el prisionero sale un día impar, el ciclo anterior e hace con la lista de pares
         for p in prisioneros:
             if inicial:
                 regla_3_2 = r31(p,casillas1,inicial)
@@ -297,7 +301,7 @@ def r32(num_cas):
     return regla_3_2
          
                 
-def r33(num_cas):
+def r33(num_cas): #Se hace el ciclo para todos los prisioneros, por casilla
     inicial = True
     regla_3_4 = ""
     for i in prisioneros:
@@ -310,7 +314,7 @@ def r33(num_cas):
     
     return regla_3_4
     
-def r34():
+def r34(): #Se hace el ciclo para todas las casillas
     inicial = True
     regla_3_5 = ""
     for i in range(0,1):
@@ -322,6 +326,8 @@ def r34():
     return regla_3_5
 
 Regla3 = r34()
+
+print(Regla3)
         
 print(Inorderp(String2Tree(Regla3)))   
 
@@ -342,7 +348,7 @@ Nfilas = 5
 Ncolumnas = 2
 Nnumeros = 5
 
-def r41(casx):
+def r41(casx): #Debe hacer por lo menos un prisionero en la casilla x
 
     regla_4_1 = ""
     inicial = True
@@ -356,9 +362,9 @@ def r41(casx):
             
     return regla_4_1
 
-def r42(casx):
+def r42(casx): #Se llenan o todas las pares, o todas las impares
     regla_4_2 = ""
-    if casx % 2 == 0:
+    if casx % 2 == 0: #Si la casilla es par, se hace con la lista de pares
         inicial1 = True
         for i in casillasp:
             if inicial1:
@@ -368,7 +374,7 @@ def r42(casx):
                 regla_4_2 += r41(i) + 'Y'
     else:
         inicial1 = True
-        for i in casillasi:
+        for i in casillasi: #Si la casilla es impar, se hace con la lista de impares
             if inicial1:
                 regla_4_2 = r41(i)
                 inicial1 = False
@@ -377,7 +383,7 @@ def r42(casx):
                 
     return regla_4_2
 
-Regla4 = r42(0) + r42(1) + 'O'
+Regla4 = r42(0) + r42(1) + 'O' #Debe cumplirse para las pares o para las impares
 
 print(Inorderp(String2Tree(Regla4)))  
 
@@ -396,7 +402,7 @@ Nfilas = 5
 Ncolumnas = 2
 Nnumeros = 5
 
-def r51(p,cas):
+def r51(p,cas): #Si hay un prisionero en una casilla, ningún otro puede estar en esa casilla 
     inicial = True
     fi, co = decodifica(cas, Nfilas, Ncolumnas)
     for i in casillas:
@@ -411,7 +417,7 @@ def r51(p,cas):
     regla_5_1 = formula1 + "-" + P(fi, co, p, Nfilas, Ncolumnas, Nnumeros) + '>'
     return regla_5_1
 
-def r52():
+def r52(): #Se hace el ciclo anterior para todos los prisioneros, para todas las casillas
     inicial = True
     for j in prisioneros:
         for i in casillas:
@@ -434,5 +440,5 @@ print(Inorderp(String2Tree(Regla5)))
 #------------------REGLA GENERAL-------------------
 #Conjunción de todas las reglas anteriores
 
-ReglaGeneral = Regla5 + Regla4 + 'Y' + Regla3 + 'Y' + Regla1 + 'Y'
+ReglaGeneral = Regla5 + Regla4 + 'Y' + Regla3 + 'Y' + Regla2 + 'Y' + Regla1 + 'Y'
 
